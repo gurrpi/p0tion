@@ -20,7 +20,7 @@ on:
 
 
 jobs:
-  deploy:
+  deploy-p0tion:
     runs-on: ubuntu-22.04
     environment: ${{ inputs.environment }}
     steps:
