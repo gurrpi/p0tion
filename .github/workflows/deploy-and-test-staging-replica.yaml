@@ -13,7 +13,7 @@ concurrency:
 jobs:
 
   deploy-staging-replica:
-    uses: ./.github/workflows/reusables/firebase-deploy.yaml
+    uses: ./.github/workflows/firebase-deploy.yaml
     secrets: inherit
     with:
       environment: staging-replica
@@ -21,7 +21,7 @@ jobs:
       firebase_project: ${{ vars.FIREBASE_PROJECT_STAGING_REPLICA }}
 
   test-staging-replica:
-      uses: ./.github/workflows/reusables/firebase-deploy.yaml
+      uses: ./.github/workflows/firebase-deploy.yaml
       secrets: inherit
       with:
         environment: staging-replica

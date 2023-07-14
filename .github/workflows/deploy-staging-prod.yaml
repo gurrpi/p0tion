@@ -8,7 +8,7 @@ on:
 jobs:
 
   deploy-staging:
-    uses: ./.github/workflows/reusables/firebase-deploy.yaml
+    uses: ./.github/workflows/firebase-deploy.yaml
     secrets: inherit
     with:
       branch: main
@@ -17,7 +17,7 @@ jobs:
 
   test-staging-replica:
     needs: deploy-staging
-    uses: ./.github/workflows/reusables/firebase-deploy.yaml
+    uses: ./.github/workflows/firebase-deploy.yaml
     secrets: inherit
     with:
       environment: staging
@@ -26,7 +26,7 @@ jobs:
 
   deploy-production:
     needs: test-staging-replica
-    uses: ./.github/workflows/reusables/firebase-deploy.yaml
+    uses: ./.github/workflows/firebase-deploy.yaml
     secrets: inherit
     with:
       branch: main
