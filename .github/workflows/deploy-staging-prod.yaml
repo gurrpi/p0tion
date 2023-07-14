@@ -1,0 +1,35 @@
+name: Deploy to staging and production
+
+on:
+  push:
+    branches: main
+  workflow_dispatch:
+
+jobs:
+
+  deploy-staging:
+    uses: ./.github/workflows/reusables/firebase-deploy.yaml
+    secrets: inherit
+    with:
+      branch: main
+      environment: staging
+      firebase_project: ${{ vars.FIREBASE_PROJECT_STAGING }}
+
+  test-staging-replica:
+    needs: deploy-staging
+    uses: ./.github/workflows/reusables/firebase-deploy.yaml
+    secrets: inherit
+    with:
+      environment: staging
+      branch: ${{ github.ref }}
+      firebase_project: ${{ vars.FIREBASE_PROJECT_STAGING_REPLICA }}
+
+  deploy-production:
+    needs: test-staging-replica
+    uses: ./.github/workflows/reusables/firebase-deploy.yaml
+    secrets: inherit
+    with:
+      branch: main
+      environment: production
+      firebase_project: ${{ vars.FIREBASE_PROJECT_PRODUCTION }}
+

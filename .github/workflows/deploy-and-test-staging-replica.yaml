@@ -1,0 +1,29 @@
+name: Deploy and Test Staging Replica
+
+on:
+  pull_request:
+    branches: [main, dev]
+  push:
+    branches: [dev]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+
+  deploy-staging-replica:
+    uses: ./.github/workflows/reusables/firebase-deploy.yaml
+    secrets: inherit
+    with:
+      environment: staging-replica
+      branch: ${{ github.ref }}
+      firebase_project: ${{ vars.FIREBASE_PROJECT_STAGING_REPLICA }}
+
+  test-staging-replica:
+      uses: ./.github/workflows/reusables/firebase-deploy.yaml
+      secrets: inherit
+      with:
+        environment: staging-replica
+        branch: ${{ github.ref }}
+        firebase_project: ${{ vars.FIREBASE_PROJECT_STAGING_REPLICA }}
